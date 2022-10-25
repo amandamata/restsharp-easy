@@ -45,6 +45,23 @@ namespace RestSharp.Easy.Console
 
             var result3 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body, query: query3);
 
+            var headerJsonBlackList = new string[] { "Authorization" };
+            client = new EasyRestClient("http://pruu.herokuapp.com/dump", requestKey: "12345", headerJsonBlackList: headerJsonBlackList);
+            body = new { test = "xxx", PersonTest = PersonTest.FirstName };
+            var header = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Authorization", "Basic dGVzdGU6dGVzdGU=")
+            };
+            var result4 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body, headers: header);
+
+            client = new EasyRestClient("http://pruu.herokuapp.com/dump", requestKey: "12345", headerJsonBlackList: null);
+            body = new { test = "xxx", PersonTest = PersonTest.FirstName };
+            header = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Authorization", "Basic dGVzdGU6dGVzdGU=")
+            };
+            var result5 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body, headers: header);
+
             Thread.Sleep(5000);
         }
     }
